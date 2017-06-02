@@ -1,8 +1,11 @@
 package com.example.pla_practice;
 
 import android.app.TabActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 
 public class MainActivity extends TabActivity {
@@ -15,20 +18,26 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         LayoutInflater.from(this).inflate(R.layout.activity_main, mTab.getTabContentView(), true);
 
-        spec = mTab.newTabSpec("home").setIndicator("", getResources().getDrawable(R.drawable.home)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        spec = mTab.newTabSpec("month").setIndicator("", getResources().getDrawable(R.drawable.month)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        spec = mTab.newTabSpec("week").setIndicator("", getResources().getDrawable(R.drawable.week)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        spec = mTab.newTabSpec("day").setIndicator("", getResources().getDrawable(R.drawable.day)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        spec = mTab.newTabSpec("memo").setIndicator("", getResources().getDrawable(R.drawable.memo)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        spec = mTab.newTabSpec("pen").setIndicator("", getResources().getDrawable(R.drawable.pen)).setContent(R.id.tv1);
-        mTab.addTab(spec);
-        //for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-        //    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("7FA3CF"));
-       // }
+        this.setNewTab(this, mTab, "home", R.drawable.home, R.id.tv1);
+        this.setNewTab(this, mTab, "month", R.drawable.month, R.id.tv1);
+        this.setNewTab(this, mTab, "week", R.drawable.week, R.id.tv1);
+        this.setNewTab(this, mTab, "day", R.drawable.day, R.id.tv1);
+        this.setNewTab(this, mTab, "memo", R.drawable.memo, R.id.tv1);
+        this.setNewTab(this, mTab, "pen", R.drawable.pen, R.id.tv1);
+
+    }
+
+    private void setNewTab(Context context, TabHost tabHost, String tag, int icon, int contentID ){ //새로 탭을 만들어 추가하는 함수
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tag);
+        tabSpec.setIndicator(getTabIndicator(tabHost.getContext(), icon));
+        tabSpec.setContent(contentID);
+        tabHost.addTab(tabSpec);
+    }
+
+    private View getTabIndicator(Context context, int icon) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tab_layout, null);
+        ImageView iv = (ImageView) view.findViewById(R.id.imageView);
+        iv.setImageResource(icon);
+        return view;
     }
 }
