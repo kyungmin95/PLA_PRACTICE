@@ -8,7 +8,7 @@
     android:background="@drawable/tab_indicator">
         <ImageView android:id="@+id/imageView"
             android:layout_width="30dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"/>
 </LinearLayout>
