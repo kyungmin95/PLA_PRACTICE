@@ -3,6 +3,7 @@ package com.example.pla_day;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -82,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 setDayDate();
             }
         });
+
+        CheckBox dayCheck01 = (CheckBox)findViewById(R.id.day_check01);
+        CheckBox dayCheck02 = (CheckBox)findViewById(R.id.day_check02);
+        //if(dayCheck01.isChecked()) dayCheck01.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG); 아직 작동 안함
+
     }
 
     public void getCurrentDate() {  //오늘 날짜를 가져오는 함수. Calendar 사용.
@@ -96,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
     }
 
+    //public void setDayCheckBox(CheckBox cb, String str, String cbid) {  //DB를 사용한다면 쓰려 했던 체크박스 추가하는 함수인데, 일단 냅두자
+
+    //}
 
 
 

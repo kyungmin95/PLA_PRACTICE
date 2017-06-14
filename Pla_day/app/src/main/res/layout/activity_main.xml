@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:paddingTop="5dp"
         android:orientation="horizontal">
         <Button
             android:layout_width="0dp"
@@ -43,16 +44,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="5dp"
+            android:orientation="vertical"
             android:id="@+id/todolist"
-            android:background="#DCE6F2"/>
-        <TextView
+            android:background="#DCE6F2">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/day_check01"
+                android:text="은행 들려서 돈 입금"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/day_check02"
+                android:text="기차표 예매"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/day_memo"
-            android:background="#EBF1DE"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="#EBF1DE">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/day_memo"
+                android:text="농* 김수정"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
