@@ -51,10 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:padding="5dp"
             android:orientation="vertical"
             android:id="@+id/todolist"
-            android:background="#DCE6F2">
+            android:background="@drawable/todolist_bg">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,14 +71,13 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:padding="10dp"
             android:orientation="vertical"
-            android:background="#EBF1DE">
+            android:background="@drawable/daymemo_bg">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/day_memo"
-                android:text="농* 김수정"/>
+                android:text="농* 김수정 \n코레일 21일\n성신여대앞 할리스 3시"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
