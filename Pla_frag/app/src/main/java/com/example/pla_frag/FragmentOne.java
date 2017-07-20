@@ -11,15 +11,14 @@ import android.widget.TextView;
  * Created by 김경민 on 2017-06-17.
  */
 
-public class DayFragment extends Fragment {
-    @Override
+public class FragmentOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
-        return inflater.inflate(R.layout.day_main, container, false);
+        return inflater.inflate(R.layout.fragment_layout, container, false);
     }
     @Override
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
         TextView tv = (TextView)view.findViewById(R.id.textView1);
         tv.setText("Hello");
-        }
+    }
 }

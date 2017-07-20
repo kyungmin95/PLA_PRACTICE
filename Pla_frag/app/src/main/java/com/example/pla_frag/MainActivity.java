@@ -17,18 +17,14 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         tabHost = (FragmentTabHost)findViewById(R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        //tabHost.addTab(tabHost.newTabSpec("home").setIndicator("",getResources().getDrawable(R.drawable.home)), DayFragment.class, null);
         //tabHost.addTab(tabHost.newTabSpec("month").setIndicator("",getResources().getDrawable(R.drawable.month)), DayFragment.class, null);
         //tabHost.addTab(tabHost.newTabSpec("week").setIndicator("",getResources().getDrawable(R.drawable.week)), DayFragment.class, null);
         //tabHost.addTab(tabHost.newTabSpec("day").setIndicator("",getResources().getDrawable(R.drawable.day)), DayFragment.class, null);
         //tabHost.addTab(tabHost.newTabSpec("memo").setIndicator("",getResources().getDrawable(R.drawable.memo)), DayFragment.class, null);
-        //tabHost.addTab(tabHost.newTabSpec("pen").setIndicator("",getResources().getDrawable(R.drawable.pen)), DayFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("home").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.home)), DayFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("month").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.month)), DayFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("week").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.week)), DayFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("month").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.month)), FragmentOne.class, null);
+        tabHost.addTab(tabHost.newTabSpec("week").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.week)), FragmentOne.class, null);
         tabHost.addTab(tabHost.newTabSpec("day").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.day)), DayFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("memo").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.memo)), DayFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("pen").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.pen)), DayFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("memo").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.memo)), FragmentOne.class, null);
     }
 
     private View getTabIndicator(Context context, int icon) {   //탭의 디자인을 지정하기 위해 탭 디자인 설정 layout과 연결시키는 함수
