@@ -23,7 +23,7 @@ public class MainActivity extends TabActivity {
         //tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         //tabHost.addTab(tabHost.newTabSpec("month").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.month)), FragmentOne.class, null);
         //tabHost.addTab(tabHost.newTabSpec("week").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.week)), FragmentOne.class, null);
-        //tabHost.addTab(tabHost.newTabSpec("day").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.day)), DayFragment.class, null);
+        //tabHost.addTab(tabHost.newTabSpec("day").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.day)), DayActivity.class, null);
         //tabHost.addTab(tabHost.newTabSpec("memo").setIndicator(getTabIndicator(tabHost.getContext(), R.drawable.memo)), FragmentOne.class, null);
         TabHost mTab = getTabHost();
         LayoutInflater.from(this).inflate(R.layout.activity_main, mTab.getTabContentView(), true);
@@ -33,7 +33,7 @@ public class MainActivity extends TabActivity {
         mTab.addTab(mTab.newTabSpec("week").setIndicator(getTabIndicator(mTab.getContext(), R.drawable.week))
                 .setContent(new Intent(this, FragmentOne.class)));
         mTab.addTab(mTab.newTabSpec("day").setIndicator(getTabIndicator(mTab.getContext(), R.drawable.day))
-                .setContent(new Intent(this, DayFragment.class)));
+                .setContent(new Intent(this, DayActivity.class)));
         mTab.addTab(mTab.newTabSpec("memo").setIndicator(getTabIndicator(mTab.getContext(), R.drawable.memo))
                 .setContent(new Intent(this, FragmentOne.class)));
     }

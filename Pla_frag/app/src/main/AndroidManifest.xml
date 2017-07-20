@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FragmentOne"/>
-        <activity android:name=".DayFragment"/>
+        <activity android:name=".DayActivity"/>
     </application>
 
 </manifest>

@@ -1,20 +1,20 @@
 package com.example.pla_frag;
 
 import android.app.Activity;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
-import java.util.Date;
 import android.os.Bundle;
 import android.view.View;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by 김경민 on 2017-06-17.
  */
 
-public class DayFragment extends Activity {
+public class DayActivity extends Activity {
     int year, month, day;
     TextView dayDate;
     Calendar c;
@@ -120,6 +120,3 @@ public class DayFragment extends Activity {
         day = Integer.parseInt(CurDay.format(date));
     }
 }
-    //public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
-        //return inflater.inflate(R.layout.day_main, container, false);
-    //}
