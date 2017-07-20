@@ -6,35 +6,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.pla_frag.MainActivity">
-
-    <android.support.v4.app.FragmentTabHost
+    <TabHost
+        android:id="@+id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tabhost">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TabWidget
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-                <TabWidget
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tabs"></TabWidget>
-            </LinearLayout>
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:id="@+id/tabcontent"
-                android:padding="5dp"></FrameLayout>
+                android:id="@+id/tabs">
+            </TabWidget>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/realtabcontent"></FrameLayout>
+                android:id="@+id/tabcontent"
+                android:padding="5dp">
+            </FrameLayout>
         </LinearLayout>
-    </android.support.v4.app.FragmentTabHost>
+    </TabHost>
 </LinearLayout>
