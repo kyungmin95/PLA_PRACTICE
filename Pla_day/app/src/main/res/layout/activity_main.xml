@@ -52,18 +52,12 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical"
-            android:id="@+id/todolist"
+            android:id="@+id/day_todolist"
             android:background="@drawable/todolist_bg">
-            <CheckBox
+            <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/day_check01"
-                android:text="은행 들려서 돈 입금"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/day_check02"
-                android:text="기차표 예매"/>
+                android:id="@+id/day_list"></ListView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

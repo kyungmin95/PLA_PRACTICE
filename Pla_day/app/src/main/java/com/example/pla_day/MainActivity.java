@@ -1,9 +1,12 @@
 package com.example.pla_day;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     int year, month, day;
     TextView dayDate;
     Calendar c;
+    static final String[] List_Day_Todo = {"은행 들려서 돈 입금", "기차표 예매"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +88,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        CheckBox dayCheck01 = (CheckBox)findViewById(R.id.day_check01);
-        CheckBox dayCheck02 = (CheckBox)findViewById(R.id.day_check02);
-        //if(dayCheck01.isChecked()) dayCheck01.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG); 아직 작동 안함
+        ArrayAdapter todolistAA = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List_Day_Todo);
+        ListView listview = (ListView)findViewById(R.id.day_list);
+        listview.setAdapter(todolistAA);
+
+        LinearLayout todolistLL = (LinearLayout)findViewById(R.id.day_todolist);
+        todolistLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent todolistIntent = new Intent(MainActivity.this, DayTodolistActivity.class);
+                todolistIntent.putExtra("year", year);
+                todolistIntent.putExtra("month", month);
+                todolistIntent.putExtra("day", day);
+                startActivity(todolistIntent);
+                finish();
+            }
+        });
 
     }
 
@@ -102,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
     }
 
-    //public void setDayCheckBox(CheckBox cb, String str, String cbid) {  //DB를 사용한다면 쓰려 했던 체크박스 추가하는 함수인데, 일단 냅두자
-
-    //}
 
 
 
