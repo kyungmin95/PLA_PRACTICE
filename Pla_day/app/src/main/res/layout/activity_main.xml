@@ -25,7 +25,8 @@
             android:layout_weight="4"
             android:id="@+id/day_date"
             android:text="날짜"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="#000000"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,9 +61,11 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
                 android:id="@+id/day_list"
                 android:divider="#00000000"
-                android:fastScrollEnabled="true"></ListView>
+                android:fastScrollEnabled="true"
+                android:listSelector="@android:color/transparent"></ListView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

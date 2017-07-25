@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class DayTodolistActivity extends Activity {
     int year, month, day;
+    int syear, smonth, sday;
     Button dayDate;
     @Override
         protected void onCreate(Bundle savedInstanceState) {

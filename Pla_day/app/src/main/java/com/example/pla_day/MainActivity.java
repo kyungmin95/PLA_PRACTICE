@@ -2,22 +2,20 @@ package com.example.pla_day;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     int year, month, day;
     TextView dayDate;
     Calendar c;
-    static final String[] List_Day_Todo = {"은행 들려서 돈 입금", "기차표 예매"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,16 +86,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        ArrayAdapter todolistAA = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List_Day_Todo);
+        //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
+        DayAdapter todolistAA = new DayAdapter();
+        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"은행 들려서 돈 입금");
+        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"기차표 예매");
+        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"시계 주문하기");
         ListView listview = (ListView)findViewById(R.id.day_list);
         listview.setAdapter(todolistAA);
 
+        //to do list의 배경을 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
         LinearLayout todolistLL = (LinearLayout)findViewById(R.id.day_todolist);
-        //ListView todolistLL = (ListView)findViewById(R.id.day_list);
         todolistLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent todolistIntent = new Intent(MainActivity.this, DayTodolistActivity.class);
+                todolistIntent.putExtra("year", year);
+                todolistIntent.putExtra("month", month);
+                todolistIntent.putExtra("day", day);
+                startActivity(todolistIntent);
+            }
+        });
+        //to do list의 리스트를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
+        ListView todolistLV = (ListView)findViewById(R.id.day_list);
+        todolistLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent todolistIntent = new Intent(MainActivity.this, DayTodolistActivity.class);
                 todolistIntent.putExtra("year", year);
                 todolistIntent.putExtra("month", month);
@@ -118,19 +131,5 @@ public class MainActivity extends AppCompatActivity {
     public void setDayDate() {  //TextView에 년, 월, 일을 입력하는 함수
         dayDate = (TextView)findViewById(R.id.day_date);
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
-    }
-
-
-
-
-    public void getCurrentDate_date() {
-        //long now = System.currentTimeMillis();
-        Date date = new Date();
-        SimpleDateFormat CurYear = new SimpleDateFormat("yyyy");
-        SimpleDateFormat CurMonth = new SimpleDateFormat("MM");
-        SimpleDateFormat CurDay = new SimpleDateFormat("dd");
-        year = Integer.parseInt(CurYear.format(date));
-        month = Integer.parseInt(CurMonth.format(date));
-        day = Integer.parseInt(CurDay.format(date));
     }
 }
