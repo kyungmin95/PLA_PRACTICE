@@ -88,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         ArrayAdapter todolistAA = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List_Day_Todo);
         ListView listview = (ListView)findViewById(R.id.day_list);
         listview.setAdapter(todolistAA);
 
         LinearLayout todolistLL = (LinearLayout)findViewById(R.id.day_todolist);
+        //ListView todolistLL = (ListView)findViewById(R.id.day_list);
         todolistLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 todolistIntent.putExtra("month", month);
                 todolistIntent.putExtra("day", day);
                 startActivity(todolistIntent);
-                finish();
             }
         });
 
