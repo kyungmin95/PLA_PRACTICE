@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     int year, month, day;
     TextView dayDate;
     Calendar c;
+    Intent dayTodoIntent, dayMemoIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,19 +94,7 @@ public class MainActivity extends AppCompatActivity {
         ListView listview = (ListView)findViewById(R.id.day_list);
         listview.setAdapter(todolistAA);
 
-        //to do list의 배경을 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
-        LinearLayout todolistLL = (LinearLayout)findViewById(R.id.day_todolist);
-        todolistLL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent todolistIntent = new Intent(MainActivity.this, DayTodolistActivity.class);
-                todolistIntent.putExtra("year", year);
-                todolistIntent.putExtra("month", month);
-                todolistIntent.putExtra("day", day);
-                startActivity(todolistIntent);
-            }
-        });
-        //to do list의 리스트를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
+        //to do list의 리스트(배경)를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
         ListView todolistLV = (ListView)findViewById(R.id.day_list);
         todolistLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 todolistIntent.putExtra("month", month);
                 todolistIntent.putExtra("day", day);
                 startActivity(todolistIntent);
+                if(todolistIntent.getExtras().getInt("clickOk") == 1) {
+                    year = todolistIntent.getExtras().getInt("cYear");
+                    month = todolistIntent.getExtras().getInt("cMonth");
+                    day = todolistIntent.getExtras().getInt("cDay");
+                    setDayDate();
+                }
             }
         });
 
@@ -131,5 +125,13 @@ public class MainActivity extends AppCompatActivity {
     public void setDayDate() {  //TextView에 년, 월, 일을 입력하는 함수
         dayDate = (TextView)findViewById(R.id.day_date);
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
+    }
+
+    public void setDayTodolist(int year, int month, int day) {
+
+    }
+
+    public void setDayMemo(int year, int month, int day) {
+
     }
 }

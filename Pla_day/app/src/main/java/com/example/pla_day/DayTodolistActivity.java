@@ -9,13 +9,14 @@ import android.widget.Button;
 public class DayTodolistActivity extends Activity {
     int year, month, day;
     int syear, smonth, sday;
+    Intent intent;
     Button dayDate;
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.day_add_todolist);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         year = intent.getExtras().getInt("year");
         month = intent.getExtras().getInt("month");
         day = intent.getExtras().getInt("day");
@@ -30,6 +31,10 @@ public class DayTodolistActivity extends Activity {
         findViewById(R.id.day_todo_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                intent.putExtra("clickOk", 1);
+                intent.putExtra("cYear", year);
+                intent.putExtra("cMonth", month);
+                intent.putExtra("cDay", day);
                 finish();
             }
         });

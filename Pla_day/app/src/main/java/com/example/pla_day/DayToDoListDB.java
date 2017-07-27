@@ -4,24 +4,23 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by 김경민 on 2017-06-15.
- */
-
 public class DayToDoListDB extends SQLiteOpenHelper {
-    public DayToDoListDB(Context context) {
-        super(context, "pladaytodo.db", null, 1);
+    public DayToDoListDB(Context context, String tabname) {
+        super(context, tabname, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table pladaytodo " +
-                "(_id integer primary key autoincrement, eng text not null, han text not null);");
+        db.execSQL("create table pladaytodo_ex " +
+                "(_id integer primary key autoincrement, date text not null, content text not null);");
+        db.execSQL("create table pladaymemo_ex " +
+                "(_id integer primary key autoincrement, date text not null, memocont text not null");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table pladaytodo;");
+        db.execSQL("drop table if exists pladaytodo_ex;");
+        db.execSQL("drop table if exists pladaymemo_ex;");
         onCreate(db);
     }
 }
