@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:background="@drawable/bar_bg"
             android:src="@drawable/cancel"
-            android:id="@+id/day_todo_can"
+            android:id="@+id/daytodoe_can"
             android:scaleType="fitCenter"/>
         <ImageButton
             android:layout_width="0dp"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:background="@drawable/bar_bg"
             android:src="@drawable/ok"
-            android:id="@+id/day_todo_ok"
+            android:id="@+id/daytodoe_ok"
             android:scaleType="fitCenter"/>
     </LinearLayout>
     <LinearLayout
@@ -60,8 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/todolist_date"
-                android:background="@drawable/chdate_bg"/>
+                android:id="@+id/daytodoe_date"
+                android:background="@drawable/chdate_bg"
+                android:onClick="changeDate"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:id="@+id/daytodo_edit"
+                    android:id="@+id/daytodoe_edit"
                     android:hint="(일정)"
                     android:singleLine="true"/>
                 <ImageButton
@@ -94,20 +95,22 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/plus"
-                    android:id="@+id/daytodo_add"
-                    android:background="#00FF0000"/>
+                    android:id="@+id/daytodoe_add"
+                    android:background="#00FF0000"
+                    android:onClick="editTodo"/>
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/edit"
-                    android:id="@+id/daytodo_upd"
-                    android:background="#00FF0000"/>
+                    android:id="@+id/daytodoe_upd"
+                    android:background="#00FF0000"
+                    android:onClick="editTodo"/>
             </LinearLayout>
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/daytodo_ed_list"
+                android:id="@+id/daytodoe_list"
                 android:fastScrollEnabled="true"></ListView>
         </LinearLayout>
     </LinearLayout>

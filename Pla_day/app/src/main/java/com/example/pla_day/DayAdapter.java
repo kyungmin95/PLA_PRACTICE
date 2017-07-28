@@ -60,4 +60,8 @@ public class DayAdapter extends BaseAdapter {
 
         myList.add(myItem);
     }
+
+    public void clearItem() {
+        myList.clear();
+    }
 }

@@ -56,13 +56,13 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical"
-            android:id="@+id/day_todolist"
+            android:id="@+id/daytodo"
             android:background="@drawable/todolist_bg">
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:id="@+id/day_list"
+                android:id="@+id/daytodo_list"
                 android:divider="#00000000"
                 android:fastScrollEnabled="true"
                 android:listSelector="@android:color/transparent">
@@ -81,7 +81,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/day_memo"
+                android:id="@+id/daymemo"
                 android:text="오늘의 일기"
                 android:textAlignment="center" />
         </LinearLayout>

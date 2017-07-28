@@ -1,6 +1,8 @@
 package com.example.pla_day;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     TextView dayDate;
     Calendar c;
     Intent dayTodoIntent, dayMemoIntent;
+    String dd;
+    DayAdapter todolistAA;
+    DayDB helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,15 +92,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
-        DayAdapter todolistAA = new DayAdapter();
-        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"은행 들려서 돈 입금");
-        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"기차표 예매");
-        todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir),"시계 주문하기");
-        ListView listview = (ListView)findViewById(R.id.day_list);
-        listview.setAdapter(todolistAA);
+        todolistAA = new DayAdapter();
+        helper = new DayDB(this);
+        setDayTodolist();
+        ListView todolistLV = (ListView)findViewById(R.id.daytodo_list);
+        todolistLV.setAdapter(todolistAA);
 
         //to do list의 리스트(배경)를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
-        ListView todolistLV = (ListView)findViewById(R.id.day_list);
         todolistLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -103,13 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 todolistIntent.putExtra("year", year);
                 todolistIntent.putExtra("month", month);
                 todolistIntent.putExtra("day", day);
-                startActivity(todolistIntent);
-                if(todolistIntent.getExtras().getInt("clickOk") == 1) {
-                    year = todolistIntent.getExtras().getInt("cYear");
-                    month = todolistIntent.getExtras().getInt("cMonth");
-                    day = todolistIntent.getExtras().getInt("cDay");
-                    setDayDate();
-                }
+                startActivityForResult(todolistIntent, 1);
             }
         });
 
@@ -122,13 +119,34 @@ public class MainActivity extends AppCompatActivity {
         day = c.get(Calendar.DAY_OF_MONTH);
     }
 
-    public void setDayDate() {  //TextView에 년, 월, 일을 입력하는 함수
+    public void setDayDate() {  //TextView에 년, 월, 일을 입력하는 함수. 날짜를 가져옴과 동시에 DB에 검색에 쓰기 위한 dd도 함께 설정.
         dayDate = (TextView)findViewById(R.id.day_date);
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
+        int syear = year; int smonth = month; int sday = day;
+        dd = Integer.toString(syear) + Integer.toString(smonth) + Integer.toString(sday);
     }
 
-    public void setDayTodolist(int year, int month, int day) {
+    @Override   //intent가 finish 된 뒤 실행. extra 값을 가져와 날짜를 바꾸고 그에 따라 daydate 와 todolist 내용을 바꿈.
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            year = data.getExtras().getInt("cYear");
+            month = data.getExtras().getInt("cMonth");
+            day = data.getExtras().getInt("cDay");
+            setDayDate();
+            setDayTodolist();
+        }
+    }
 
+    public void setDayTodolist() { //todolist 에 DB 내용에서 가져온 content 값을 가져옴.
+        todolistAA.clearItem();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("select content from pladaytodo_ex where date = "+ dd + ";", null);
+        while(c.moveToNext()) {
+            todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir), c.getString(0));
+        }
+        c.close();
+        db.close();
     }
 
     public void setDayMemo(int year, int month, int day) {
