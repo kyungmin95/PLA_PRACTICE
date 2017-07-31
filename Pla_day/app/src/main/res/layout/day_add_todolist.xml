@@ -15,20 +15,12 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="3dp"
-            android:text="일정 입력"
+            android:text="일정 관리"
             android:textSize="25dp"
             android:textColor="#000000"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bar_bg"
-            android:src="@drawable/cancel"
-            android:id="@+id/daytodoe_can"
-            android:scaleType="fitCenter"/>
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -76,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="내용"
+                android:text="일정"
                 android:textSize="20dp"
                 android:textColor="#000000"/>
             <LinearLayout
@@ -88,7 +80,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:id="@+id/daytodoe_edit"
-                    android:hint="(일정)"
+                    android:hint="(할일을 입력하세요)"
                     android:singleLine="true"/>
                 <ImageButton
                     android:layout_width="0dp"

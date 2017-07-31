@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     String dd;
     DayAdapter todolistAA;
     DayDB helper;
+    ListView todolistLV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     month = 12;
                 }
                 setDayDate();
+                setDayTodolist();
+                //setDayMemo();
             }
         });
 
@@ -80,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     year += 1; month = 1;
                 }
                 setDayDate();
+                setDayTodolist();
+                //setDayMemo();
             }
         });
 
@@ -88,14 +94,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getCurrentDate();
                 setDayDate();
+                setDayTodolist();
+                //setDayMemo();
             }
         });
 
         //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
         todolistAA = new DayAdapter();
         helper = new DayDB(this);
-        setDayTodolist();
-        ListView todolistLV = (ListView)findViewById(R.id.daytodo_list);
+        todolistLV = (ListView)findViewById(R.id.daytodo_list);
+        setDayTodolist(); //함수 이용해 어댑터와 연결
         todolistLV.setAdapter(todolistAA);
 
         //to do list의 리스트(배경)를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
@@ -126,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
         dd = Integer.toString(syear) + Integer.toString(smonth) + Integer.toString(sday);
     }
 
+    //todolist 항목이 없없어서 리스트뷰가 나타나지 않을 때, + 버튼과 배경을 누르면 일정 추가 화면으로 intent 하는 함수
+    public void intentTodo(View v) {
+        Intent todolistIntent = new Intent(MainActivity.this, DayTodolistActivity.class);
+        todolistIntent.putExtra("year", year);
+        todolistIntent.putExtra("month", month);
+        todolistIntent.putExtra("day", day);
+        startActivityForResult(todolistIntent, 1);
+    }
+
     @Override   //intent가 finish 된 뒤 실행. extra 값을 가져와 날짜를 바꾸고 그에 따라 daydate 와 todolist 내용을 바꿈.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -135,21 +152,31 @@ public class MainActivity extends AppCompatActivity {
             day = data.getExtras().getInt("cDay");
             setDayDate();
             setDayTodolist();
+            //setDayMemo();
         }
     }
 
     public void setDayTodolist() { //todolist 에 DB 내용에서 가져온 content 값을 가져옴.
+        int count = 0;
+        ImageView todoadd = (ImageView)findViewById(R.id.daytodo_add);
+        todolistLV = (ListView)findViewById(R.id.daytodo_list);
         todolistAA.clearItem();
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("select content from pladaytodo_ex where date = "+ dd + ";", null);
         while(c.moveToNext()) {
             todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir), c.getString(0));
+            count++;
         }
+        if(count == 0 ){
+            todoadd.setVisibility(View.VISIBLE);
+        }
+        else todoadd.setVisibility(View.GONE);
         c.close();
         db.close();
+        todolistAA.notifyDataSetChanged();
     }
 
-    public void setDayMemo(int year, int month, int day) {
+    public void setDayMemo() {
 
     }
 }

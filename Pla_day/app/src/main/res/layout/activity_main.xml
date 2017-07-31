@@ -57,7 +57,16 @@
             android:layout_marginRight="20dp"
             android:orientation="vertical"
             android:id="@+id/daytodo"
-            android:background="@drawable/todolist_bg">
+            android:background="@drawable/todolist_bg"
+            android:onClick="intentTodo">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/todoadd"
+                android:background="#00FF0000"
+                android:scaleType="center"
+                android:id="@+id/daytodo_add"
+                android:onClick="intentTodo"/>
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
