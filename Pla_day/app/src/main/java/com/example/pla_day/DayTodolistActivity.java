@@ -21,7 +21,7 @@ public class DayTodolistActivity extends Activity {
     ListView edList;
     DayDB edhelper;
     DayEdTodoAD todoedAA;
-    String dd;
+    String dd, division;
     DayEdTodoItem dei;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class DayTodolistActivity extends Activity {
         month = intent.getExtras().getInt("month");
         day = intent.getExtras().getInt("day");
         setDayDate();
+        division = "todo";
 
         //완료 버튼 누르면 이전 Day main 화면으로 돌아감(intent finish)
         findViewById(R.id.daytodoe_ok).setOnClickListener(new View.OnClickListener() {
@@ -79,7 +80,7 @@ public class DayTodolistActivity extends Activity {
         }
     };
 
-    public void setDayDate() {  //TextView에 년, 월, 일을 입력하는 함수. 데이터베이스에 사용하기 위해 String 타입으로 dd도 지정.
+    public void setDayDate() {  //버튼에 년, 월, 일을 입력하는 함수. 데이터베이스에 사용하기 위해 String 타입으로 dd도 지정.
         dayDate = (Button) findViewById(R.id.daytodoe_date);
         dayDate.setText(year+"년 "+month+"월 "+day+"일");
         int syear = year; int smonth = month; int sday = day;
@@ -89,7 +90,7 @@ public class DayTodolistActivity extends Activity {
     public void makeList() {    //디비에서 날짜에 해당하는 내용을 가져와 리스트에 추가하고 어댑터에 알려주는 함수
         todoedAA.clearItem();
         SQLiteDatabase db = edhelper.getReadableDatabase();
-        Cursor c = db.rawQuery("select _id, content from pladaytodo_ex where date = "+ dd + ";", null);
+        Cursor c = db.rawQuery("select _id, content from pladaytodo_ex where date = '"+ dd +"';", null);
         while(c.moveToNext()) {
             todoedAA.addItem(c.getInt(0), c.getString(1));
         }

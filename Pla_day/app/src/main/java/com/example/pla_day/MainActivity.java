@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     String dd;
     DayAdapter todolistAA;
     DayDB helper;
+    DayMemoDB mHelper;
     ListView todolistLV;
+    TextView dayMemo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 setDayDate();
                 setDayTodolist();
-                //setDayMemo();
+                setDayMemo();
             }
         });
 
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 setDayDate();
                 setDayTodolist();
-                //setDayMemo();
+                setDayMemo();
             }
         });
 
@@ -95,13 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 getCurrentDate();
                 setDayDate();
                 setDayTodolist();
-                //setDayMemo();
+                setDayMemo();
             }
         });
 
         //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
         todolistAA = new DayAdapter();
         helper = new DayDB(this);
+        mHelper = new DayMemoDB(this);
         todolistLV = (ListView)findViewById(R.id.daytodo_list);
         setDayTodolist(); //함수 이용해 어댑터와 연결
         todolistLV.setAdapter(todolistAA);
@@ -115,6 +118,19 @@ public class MainActivity extends AppCompatActivity {
                 todolistIntent.putExtra("month", month);
                 todolistIntent.putExtra("day", day);
                 startActivityForResult(todolistIntent, 1);
+            }
+        });
+
+        dayMemo = (TextView)findViewById(R.id.daymemo);
+        setDayMemo();
+        dayMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent memoIntent = new Intent(MainActivity.this, DayMemoActivity.class);
+                memoIntent.putExtra("year", year);
+                memoIntent.putExtra("month", month);
+                memoIntent.putExtra("day", day);
+                startActivityForResult(memoIntent, 1);
             }
         });
 
@@ -152,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             day = data.getExtras().getInt("cDay");
             setDayDate();
             setDayTodolist();
-            //setDayMemo();
+            setDayMemo();
         }
     }
 
@@ -162,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         todolistLV = (ListView)findViewById(R.id.daytodo_list);
         todolistAA.clearItem();
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.rawQuery("select content from pladaytodo_ex where date = "+ dd + ";", null);
+        Cursor c = db.rawQuery("select content from pladaytodo_ex where date = '"+ dd + "';", null);
         while(c.moveToNext()) {
             todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir), c.getString(0));
             count++;
@@ -177,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setDayMemo() {
-
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor c = db.rawQuery("select memocont from pladaymemo_ex where date = '"+ dd + "';", null);
+        while(c.moveToNext()) {
+            dayMemo.setText(c.getString(0));
+        }
+        c.close();
+        db.close();
     }
 }

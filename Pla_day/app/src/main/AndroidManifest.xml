@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".DayTodolistActivity"
             android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".DayMemoActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
