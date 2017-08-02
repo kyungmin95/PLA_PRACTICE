@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 //Day Memo에 필요한 DB 생성
 public class DayMemoDB extends SQLiteOpenHelper {
     public DayMemoDB(Context context) {
-        super(context, "pladaym_ex.db", null, 1);
+        super(context, "pladayme_ex.db", null, 1);
     }
 
     @Override

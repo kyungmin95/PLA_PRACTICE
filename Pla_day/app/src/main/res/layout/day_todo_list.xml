@@ -16,7 +16,7 @@
             android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
-            android:id="@+id/daytodo_cir"/>
+            android:src="@drawable/cir"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -21,7 +21,7 @@ public class DayTodolistActivity extends Activity {
     ListView edList;
     DayDB edhelper;
     DayEdTodoAD todoedAA;
-    String dd, division;
+    String dd;
     DayEdTodoItem dei;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class DayTodolistActivity extends Activity {
         month = intent.getExtras().getInt("month");
         day = intent.getExtras().getInt("day");
         setDayDate();
-        division = "todo";
 
         //완료 버튼 누르면 이전 Day main 화면으로 돌아감(intent finish)
         findViewById(R.id.daytodoe_ok).setOnClickListener(new View.OnClickListener() {

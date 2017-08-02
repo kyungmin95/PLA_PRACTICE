@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     int year, month, day;
     TextView dayDate;
     Calendar c;
-    Intent dayTodoIntent, dayMemoIntent;
     String dd;
     DayAdapter todolistAA;
     DayDB helper;
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         getCurrentDate();
         setDayDate();  //getCurrentDate로 오늘 날짜를 가져온 뒤, 그 값을 dayDate에 입력(아무 버튼도 누르지 않은 기본 상태)
 
+        //전날로 날짜를 옮기는 함수
         findViewById(R.id.day_left).setOnClickListener(new View.OnClickListener() { // '<' 버튼 눌렀을 때. 전날로 날짜 이동
             @Override
             public void onClick(View v) {
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //다음날로 날짜를 옮기는 함수
         findViewById(R.id.day_right).setOnClickListener(new View.OnClickListener() {  // '>' 버튼 눌렀을 때. 다음날로 날짜 이동
             @Override
             public void onClick(View v) {
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //오늘로 날짜를 옮기는 함수
         findViewById(R.id.day_today).setOnClickListener(new View.OnClickListener() {  // '오늘' 버튼 눌렀을 때. 오늘로 날짜 이동
             @Override
             public void onClick(View v) {
@@ -101,12 +102,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
         todolistAA = new DayAdapter();
+        //DB helper 생성
         helper = new DayDB(this);
         mHelper = new DayMemoDB(this);
+        //리스트를 직접 구성한 이미지로 보이게 하기 위해 새로 만든 어댑터와 연결
         todolistLV = (ListView)findViewById(R.id.daytodo_list);
-        setDayTodolist(); //함수 이용해 어댑터와 연결
+        setDayTodolist(); //함수 이용해 리스트 생성
         todolistLV.setAdapter(todolistAA);
 
         //to do list의 리스트(배경)를 선택하면 to do list 추가 화면으로 넘어가는 intent 설정
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //일기 부분 클릭하면 수정 부분으로 넘어가는 intent 설정
         dayMemo = (TextView)findViewById(R.id.daymemo);
         setDayMemo();
         dayMemo.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("select content from pladaytodo_ex where date = '"+ dd + "';", null);
         while(c.moveToNext()) {
-            todolistAA.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cir), c.getString(0));
+            todolistAA.addItem(c.getString(0));
             count++;
         }
         if(count == 0 ){
@@ -192,7 +195,8 @@ public class MainActivity extends AppCompatActivity {
         todolistAA.notifyDataSetChanged();
     }
 
-    public void setDayMemo() {
+    public void setDayMemo() { //일기 화면에 DB에서 가져온 memocont 값을 가져옴.
+        dayMemo.setText("");
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor c = db.rawQuery("select memocont from pladaymemo_ex where date = '"+ dd + "';", null);
         while(c.moveToNext()) {

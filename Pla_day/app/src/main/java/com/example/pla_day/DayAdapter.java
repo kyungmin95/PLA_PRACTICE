@@ -1,16 +1,23 @@
 package com.example.pla_day;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 //새로운 형태의 리스트를 만들기 위해 어댑터 생성
+class DayListView {
+    private String content;
+
+    public void setContent(String con) {
+        content = con;
+    }
+    public String getContent() { return content; }
+}
+
 public class DayAdapter extends BaseAdapter {
     private ArrayList<DayListView> myList = new ArrayList<>();
 
@@ -41,23 +48,17 @@ public class DayAdapter extends BaseAdapter {
         }
 
         //해당 ImageView 와 TextView 를 가져와서 데이터를 넣음
-        ImageView img = (ImageView)convertView.findViewById(R.id.daytodo_cir);
         TextView txtv = (TextView)convertView.findViewById(R.id.daytodo_cont);
 
         DayListView mList = getItem(position);
-
-        img.setImageDrawable(mList.getCircle());
         txtv.setText(mList.getContent());
 
         return convertView;
     }
 
-    public void addItem(Drawable cir, String cont) { //myList에 원하는 데이터 가진 리스트를 넣는 함수
+    public void addItem(String cont) { //myList에 원하는 데이터 가진 리스트를 넣는 함수
         DayListView myItem = new DayListView();
-
-        myItem.setCircle(cir);
         myItem.setContent(cont);
-
         myList.add(myItem);
     }
 

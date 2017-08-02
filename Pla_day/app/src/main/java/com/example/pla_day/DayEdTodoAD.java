@@ -27,7 +27,6 @@ class DayEdTodoItem {  //필요한 데이터 저장하는 클래스 생성
 
 public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어댑터 생성
     private ArrayList<DayEdTodoItem> edList = new ArrayList<>();
-    DayDB helper;
     DayEdTodoItem medList;
 
     @Override
@@ -47,7 +46,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        final int pos = position;
         final Context context = parent.getContext();
 
         //eidt의 list 를 inflate 하여서 convertView 구함
@@ -58,7 +57,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
 
         //해당 TextView 를 가져와서 데이터를 넣음
         TextView txtv = (TextView)convertView.findViewById(R.id.daytodoe_cont);
-        medList = getItem(position);
+        medList = getItem(pos);
         txtv.setText(medList.getContent_ed());
 
         ImageButton ibt = (ImageButton)convertView.findViewById(R.id.daytodoe_del);
@@ -68,6 +67,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
                 new AlertDialog.Builder(context).setTitle("삭제").setMessage("삭제 하시겠습니까?").
                         setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int but) {
+                                medList = getItem(pos);
                                 DayDB helper = new DayDB(context);
                                 SQLiteDatabase db = helper.getWritableDatabase();
                                 db.delete("pladaytodo_ex", "_id=" + medList.getEd_id(), null);
@@ -84,7 +84,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
         return convertView;
     }
 
-    public void addItem(int id, String cont) { //myList에 원하는 데이터 가진 리스트를 넣는 함수
+    public void addItem(int id, String cont) { //edList에 원하는 데이터 가진 리스트를 넣는 함수
         DayEdTodoItem myItem = new DayEdTodoItem();
 
         myItem.setContent_ed(cont);
@@ -95,5 +95,5 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
 
     public void clearItem() {
         edList.clear();
-    }
+    } //리스트 내용을 전부 삭제
 }

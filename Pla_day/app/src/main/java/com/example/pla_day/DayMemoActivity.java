@@ -15,7 +15,7 @@ public class DayMemoActivity extends Activity {
     int year, month, day;
     Intent mintent;
     TextView dayDate;
-    String dd, division;
+    String dd;
     DayMemoDB mHelper;
     EditText memoCont;
     @Override
@@ -23,57 +23,59 @@ public class DayMemoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day_memo);
 
+        //intent를 얻어와 날짜를 설정한 뒤 해당 날짜에 저장 돼있는 일기 내용을 edittext에 올림
         mintent = getIntent();
         year = mintent.getExtras().getInt("year");
         month = mintent.getExtras().getInt("month");
         day = mintent.getExtras().getInt("day");
         mHelper = new DayMemoDB(this);
-        division = "memo";
         setDayDate();
         memoCont = (EditText)findViewById(R.id.daymemo_cont);
         makeMemo();
 
+        //취소 버튼을 누르면 바뀐 내용을 저장하지 않고 그냥 intent를 종료
         findViewById(R.id.daymemo_can).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mintent.putExtra("cmYear", year);
-                mintent.putExtra("cmMonth", month);
-                mintent.putExtra("cmDay", day);
-                setResult(RESULT_OK, mintent);
+                setResult(RESULT_CANCELED, mintent);
                 finish();
             }
         });
-
+        //내용 지우기 버튼을 누르면 edittext 안의 내용이 지워짐
+        findViewById(R.id.daymemo_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                memoCont.setText("");
+            }
+        });
     }
 
     public void editMemo(View v) {  // 체크 모양을 누르면 메모 내용을 DB에 추가하거나 수정하고 intent를 종료함
-        mintent.putExtra("cmYear", year);
-        mintent.putExtra("cmMonth", month);
-        mintent.putExtra("cmDay", day);
-        setResult(RESULT_OK, mintent);
         SQLiteDatabase db = mHelper.getReadableDatabase();
         String mecont = memoCont.getText().toString();
-        int mId = 0; int cnt = 0;
-        Cursor c = db.rawQuery("select _id, memocont from pladaymemo_ex where date = '"+ dd +"';", null);
+        int mId = -1;
+        //해당 날짜에 일기 가 있는지 DB를 탐색
+        Cursor c = db.rawQuery("select _id from pladaymemo_ex where date = '"+ dd +"';", null);
         while(c.moveToNext()) {
             mId = c.getInt(0);
-            cnt++;
         }
-        c.close();
         db = mHelper.getWritableDatabase();
-        if(cnt == 0) {
-            if(mecont.length() != 0) {
+        if(mecont.length() != 0) {
+            if(mId == -1) {
                 String queryadd = String.format("insert into %s values(null, '%s', '%s');", "pladaymemo_ex", dd, mecont);
                 db.execSQL(queryadd);
             }
-        }
-        else {
-            if(mecont.length() != 0) {
+            else {
                 String queryupd = String.format("update %s set memocont='%s' where _id = %d;", "pladaymemo_ex", mecont, mId);
                 db.execSQL(queryupd);
             }
         }
+        else {
+            db.delete("pladaymemo_ex", "_id=" + mId, null);
+        }
         db.close();
+        c.close();
+        //날짜를 전달하면서 intent 종료
         mintent.putExtra("cYear", year);
         mintent.putExtra("cMonth", month);
         mintent.putExtra("cDay", day);
@@ -88,7 +90,7 @@ public class DayMemoActivity extends Activity {
         dd = Integer.toString(syear) + Integer.toString(smonth) + Integer.toString(sday);
     }
 
-    public void memoChangeDate(View v){
+    public void memoChangeDate(View v){ //picker를 사용해 날짜 선택하도록 함
         DatePickerDialog dpf = new DatePickerDialog(this, listener, year, month-1, day);
         dpf.show();
     }
@@ -105,7 +107,8 @@ public class DayMemoActivity extends Activity {
         }
     };
 
-    public void makeMemo() {
+    public void makeMemo() {    //지정한 날짜에 따라 저장된 일기 DB를 가져와 edittext에 넣는 함수
+        memoCont.setText("");
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor c = db.rawQuery("select memocont from pladaymemo_ex where date = '"+ dd +"';", null);
         while(c.moveToNext()) {
