@@ -89,7 +89,7 @@ public class DayTodolistActivity extends Activity {
     public void makeList() {    //디비에서 날짜에 해당하는 내용을 가져와 리스트에 추가하고 어댑터에 알려주는 함수
         todoedAA.clearItem();
         SQLiteDatabase db = edhelper.getReadableDatabase();
-        Cursor c = db.rawQuery("select _id, content from pladaytodo_ex where date = '"+ dd +"';", null);
+        Cursor c = db.rawQuery("select _id, content from pladaytodo_exc where date = '"+ dd +"';", null);
         while(c.moveToNext()) {
             todoedAA.addItem(c.getInt(0), c.getString(1));
         }
@@ -106,14 +106,14 @@ public class DayTodolistActivity extends Activity {
                 str_cont = editCont.getText().toString();
                 if (str_cont.length() == 0)
                     break;
-                String queryadd = String.format("insert into %s values(null, '%s', '%s');", "pladaytodo_ex", dd, str_cont);
+                String queryadd = String.format("insert into %s values(null, '%s', '%s', '%s');", "pladaytodo_exc", dd, str_cont, "F");
                 db.execSQL(queryadd);
                 break;
             case R.id.daytodoe_upd:
                 str_cont = editCont.getText().toString();
                 if (str_cont.length() == 0)
                     break;
-                String queryupd = String.format("update %s set content='%s' where _id = %d;", "pladaytodo_ex", str_cont, dei.getEd_id());
+                String queryupd = String.format("update %s set content='%s' where _id = %d;", "pladaytodo_exc", str_cont, dei.getEd_id());
                 db.execSQL(queryupd);
                 break;
         }

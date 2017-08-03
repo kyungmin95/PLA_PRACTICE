@@ -60,6 +60,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
         medList = getItem(pos);
         txtv.setText(medList.getContent_ed());
 
+        //- 버튼을 누르면 삭제 여부를 물어보고 삭제하면 DB에서 삭제, list 내용도 갱신
         ImageButton ibt = (ImageButton)convertView.findViewById(R.id.daytodoe_del);
         ibt.setOnClickListener(new View.OnClickListener() {   //- 버튼을 누르면 확인 뒤 해당 데이터를 DB에서 삭제하고 list 갱신.
             @Override
@@ -70,7 +71,7 @@ public class DayEdTodoAD extends BaseAdapter{ //리스트뷰 연결 위한 어�
                                 medList = getItem(pos);
                                 DayDB helper = new DayDB(context);
                                 SQLiteDatabase db = helper.getWritableDatabase();
-                                db.delete("pladaytodo_ex", "_id=" + medList.getEd_id(), null);
+                                db.delete("pladaytodo_exc", "_id=" + medList.getEd_id(), null);
                                 db.close();
                                 edList.remove(medList);
                                 notifyDataSetChanged();

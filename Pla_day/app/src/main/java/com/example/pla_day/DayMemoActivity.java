@@ -61,16 +61,16 @@ public class DayMemoActivity extends Activity {
         }
         db = mHelper.getWritableDatabase();
         if(mecont.length() != 0) {
-            if(mId == -1) {
+            if(mId == -1) { //DB 탐색 결과가 없으면 해당 내용을 DB에 insert함
                 String queryadd = String.format("insert into %s values(null, '%s', '%s');", "pladaymemo_ex", dd, mecont);
                 db.execSQL(queryadd);
             }
-            else {
+            else {  //DB 탐색 결과가 있으면 해당 내용을 DB에 update 함
                 String queryupd = String.format("update %s set memocont='%s' where _id = %d;", "pladaymemo_ex", mecont, mId);
                 db.execSQL(queryupd);
             }
         }
-        else {
+        else {      //mecont 에 내용이 아무것도 없으면 DB 내용 삭제
             db.delete("pladaymemo_ex", "_id=" + mId, null);
         }
         db.close();

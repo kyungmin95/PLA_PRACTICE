@@ -1,5 +1,6 @@
 package com.example.pla_day;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -136,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(memoIntent, 1);
             }
         });
-
     }
 
     public void getCurrentDate() {  //오늘 날짜를 가져오는 함수. Calendar 사용.
@@ -152,6 +153,23 @@ public class MainActivity extends AppCompatActivity {
         int syear = year; int smonth = month; int sday = day;
         dd = Integer.toString(syear) + Integer.toString(smonth) + Integer.toString(sday);
     }
+
+    public void mChangeDate(View v) {  //<> 표시 말고도 날짜를 누르면 달력으로 날짜를 지정할 수 있도록 Picker 지정
+        DatePickerDialog dpf = new DatePickerDialog(this, listener, year, month-1, day);
+        dpf.show();
+    }
+    //Picker 에 의해 설정된 날짜 적용
+    private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int cyear, int cmonth, int cdayOfMonth) {
+            year = cyear;
+            month = cmonth+1;
+            day = cdayOfMonth;
+            setDayDate();
+            setDayTodolist();
+            setDayMemo();
+        }
+    };
 
     //todolist 항목이 없없어서 리스트뷰가 나타나지 않을 때, + 버튼과 배경을 누르면 일정 추가 화면으로 intent 하는 함수
     public void intentTodo(View v) {
@@ -181,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
         todolistLV = (ListView)findViewById(R.id.daytodo_list);
         todolistAA.clearItem();
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.rawQuery("select content from pladaytodo_ex where date = '"+ dd + "';", null);
+        Cursor c = db.rawQuery("select _id, content, checked from pladaytodo_exc where date = '"+ dd + "';", null);
         while(c.moveToNext()) {
-            todolistAA.addItem(c.getString(0));
+            todolistAA.addItem(c.getInt(0), c.getString(1), c.getString(2));
             count++;
         }
         if(count == 0 ){
