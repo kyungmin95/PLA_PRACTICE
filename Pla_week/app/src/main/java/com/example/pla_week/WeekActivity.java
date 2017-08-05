@@ -1,9 +1,9 @@
 package com.example.pla_week;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,8 +26,9 @@ public class WeekActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {    // + 버튼을 누르면 일정 추가 화면으로 넘어감
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent addTodoIntent = new Intent(WeekActivity.this, WeekAddTodoActivity.class);
+                startActivity(addTodoIntent);
+                //startActivityForResult(addTodoIntent, 1);
             }
         });
 
