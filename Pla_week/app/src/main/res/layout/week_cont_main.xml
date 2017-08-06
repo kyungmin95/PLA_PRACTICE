@@ -67,7 +67,7 @@
                 android:onClick="weIntentTodo">
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:id="@+id/week_list_b"
                     android:divider="#00000000"
@@ -87,7 +87,7 @@
                 android:onClick="weIntentTodo">
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:id="@+id/week_list_g"
                     android:divider="#00000000"
@@ -107,7 +107,7 @@
                 android:onClick="weIntentTodo">
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:id="@+id/week_list_p"
                     android:divider="#00000000"
@@ -126,7 +126,7 @@
                 android:onClick="weIntentTodo">
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:id="@+id/week_list_v"
                     android:divider="#00000000"
