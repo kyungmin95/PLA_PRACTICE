@@ -55,7 +55,7 @@ public class WeekAddTodoActivity extends Activity {
                 intent.putExtra("cDay", day);
                 setResult(RESULT_OK, intent);
                 SQLiteDatabase db = helper.getReadableDatabase();
-                String queryupd = String.format("update %s set nn='O' where date = '%s';", "plaweektodo_ex", wd);
+                String queryupd = String.format("update %s set nn='O' where nn = 'N';", "plaweektodo_ex");
                 db.execSQL(queryupd);
                 db.close();
                 finish();

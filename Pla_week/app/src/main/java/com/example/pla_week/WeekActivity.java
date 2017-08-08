@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -148,6 +149,60 @@ public class WeekActivity extends Activity {
                 setTodoList();
             }
         });
+
+        //각각 배경색에 해당하는 리스트를 클릭함에 따라 edit 하는 화면으로 intent 하는 클릭리스너 등록
+        bLV.setOnItemClickListener(new AdapterView.OnItemClickListener() { //파란 배경 리스트 아이템 클릭 시, color를 B 로 하고 인텐트 실행
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editTodoIntent = new Intent(WeekActivity.this, WeekEditTodoActivity.class);
+                editTodoIntent.putExtra("WYear", WYear);
+                editTodoIntent.putExtra("Mmonth", Mmonth);
+                editTodoIntent.putExtra("Mday", MDate);
+                editTodoIntent.putExtra("Smonth", Smonth);
+                editTodoIntent.putExtra("Sday", SDate);
+                editTodoIntent.putExtra("color", "B");
+                startActivityForResult(editTodoIntent, 1);
+            }
+        });
+        gLV.setOnItemClickListener(new AdapterView.OnItemClickListener() { //초록색 배경 리스트 아이템 클릭 시, color를 G 로 하고 인텐트 실행
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editTodoIntent = new Intent(WeekActivity.this, WeekEditTodoActivity.class);
+                editTodoIntent.putExtra("WYear", WYear);
+                editTodoIntent.putExtra("Mmonth", Mmonth);
+                editTodoIntent.putExtra("Mday", MDate);
+                editTodoIntent.putExtra("Smonth", Smonth);
+                editTodoIntent.putExtra("Sday", SDate);
+                editTodoIntent.putExtra("color", "G");
+                startActivityForResult(editTodoIntent, 1);
+            }
+        });
+        pLV.setOnItemClickListener(new AdapterView.OnItemClickListener() { //분홍색 배경 리스트 아이템 클릭 시, color를 P 로 하고 인텐트 실행
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editTodoIntent = new Intent(WeekActivity.this, WeekEditTodoActivity.class);
+                editTodoIntent.putExtra("WYear", WYear);
+                editTodoIntent.putExtra("Mmonth", Mmonth);
+                editTodoIntent.putExtra("Mday", MDate);
+                editTodoIntent.putExtra("Smonth", Smonth);
+                editTodoIntent.putExtra("Sday", SDate);
+                editTodoIntent.putExtra("color", "P");
+                startActivityForResult(editTodoIntent, 1);
+            }
+        });
+        vLV.setOnItemClickListener(new AdapterView.OnItemClickListener() { //보라색 배경 리스트 아이템 클릭 시, color를 V 로 하고 인텐트 실행
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editTodoIntent = new Intent(WeekActivity.this, WeekEditTodoActivity.class);
+                editTodoIntent.putExtra("WYear", WYear);
+                editTodoIntent.putExtra("Mmonth", Mmonth);
+                editTodoIntent.putExtra("Mday", MDate);
+                editTodoIntent.putExtra("Smonth", Smonth);
+                editTodoIntent.putExtra("Sday", SDate);
+                editTodoIntent.putExtra("color", "V");
+                startActivityForResult(editTodoIntent, 1);
+            }
+        });
     }
 
     public void getFEDate() {   //오늘 날짜에 맞춰 주의 월요일과 일요일을 가져옴
@@ -258,6 +313,9 @@ public class WeekActivity extends Activity {
             setWeekP();
             setTodoList();
         }
+        else {
+            setTodoList();
+        }
     }
 
     public void setTodoList() {
@@ -329,5 +387,27 @@ public class WeekActivity extends Activity {
 
         c.close();
         db.close();
+    }
+
+    public void weIntentTodo(View v) {
+        String col="";
+        switch (v.getId()) {
+            case R.id.week_todo_b:
+                col = "B";break;
+            case R.id.week_todo_g:
+                col = "G";break;
+            case R.id.week_todo_p:
+                col = "P";break;
+            case R.id.week_todo_v:
+                col = "V";break;
+        }
+        Intent editTodoIntent = new Intent(WeekActivity.this, WeekEditTodoActivity.class);
+        editTodoIntent.putExtra("WYear", WYear);
+        editTodoIntent.putExtra("Mmonth", Mmonth);
+        editTodoIntent.putExtra("Mday", MDate);
+        editTodoIntent.putExtra("Smonth", Smonth);
+        editTodoIntent.putExtra("Sday", SDate);
+        editTodoIntent.putExtra("color", col);
+        startActivity(editTodoIntent);
     }
 }

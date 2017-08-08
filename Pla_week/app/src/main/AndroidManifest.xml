@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".WeekAddTodoActivity"
             android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".WeekEditTodoActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
