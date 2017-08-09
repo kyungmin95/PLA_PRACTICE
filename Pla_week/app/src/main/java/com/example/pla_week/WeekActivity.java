@@ -151,6 +151,7 @@ public class WeekActivity extends Activity {
         });
 
         //각각 배경색에 해당하는 리스트를 클릭함에 따라 edit 하는 화면으로 intent 하는 클릭리스너 등록
+        //edit 하는 경우에는 주 변경 기능이 없으므로 해당 주의 년, 월요일/일요일 을 intent로 보냄
         bLV.setOnItemClickListener(new AdapterView.OnItemClickListener() { //파란 배경 리스트 아이템 클릭 시, color를 B 로 하고 인텐트 실행
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -305,7 +306,7 @@ public class WeekActivity extends Activity {
     @Override   //intent가 finish 된 뒤 실행. extra 값을 가져와 날짜를 바꾸고 그에 따라 해당 주 와 todolist 내용을 바꿈.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK) {   //+로 내용 add 한 경우에는 주를 변경할 수 있으니 그에 맞게 날짜를 받아와 주를 변경하고 리스트 생성
             year = data.getExtras().getInt("cYear");
             month = data.getExtras().getInt("cMonth");
             day = data.getExtras().getInt("cDay");
@@ -313,7 +314,7 @@ public class WeekActivity extends Activity {
             setWeekP();
             setTodoList();
         }
-        else {
+        else { //그냥 edit 한 경우에는 주 변동이 없으므로 받는 데이터 없이 그냥 인텐트 종료하고, 리스트 재생성
             setTodoList();
         }
     }
