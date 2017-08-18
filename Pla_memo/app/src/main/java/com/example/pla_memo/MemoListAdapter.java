@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-class MemoListItem {
+//리스트뷰에 보이는 내용을 설정 하기 위해 커스텀 어댑터 생성
+class MemoListItem {  //필요한 데이터 값을 저장하는 클래스
     private int mId;
     private String title;
     private String cont;
@@ -54,6 +55,7 @@ public class MemoListAdapter extends BaseAdapter { //리스트뷰 연결 위한 
             convertView = inflater.inflate(R.layout.memo_list, parent, false);
         }
 
+        //해당 pos 위치에 있는 아이템값을 가져와 medList 에 넣은 뒤, 그 데이터를 기반으로 title, cont, day 에 제목, 내용, 날짜를 넣음
         medList = getItem(pos);
         TextView title = (TextView)convertView.findViewById(R.id.memol_title);
         title.setText(medList.getTitle());
